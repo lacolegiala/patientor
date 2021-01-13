@@ -7,25 +7,27 @@ import { useStateValue } from '../state';
 
 const PatientFullInfo: React.FC = () => {
   const [state, dispatch] = useStateValue();
-  const [patient, setPatient] = useState<Patient | null>(null);
-
   const { id } = useParams<{ id: string }>();
+  const [patient, setPatient] = useState<Patient | null>(state.patientDetails[id]);
 
   React.useEffect(() => {
     const fetchPatientData = async () => {
       try {
         const {data} = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
-        );
-        setPatient(data);
-        dispatch({type: 'SET_INDIVIDUAL_PATIENT', payload: data});
+          );
+          setPatient(data);
+          dispatch({type: 'SET_INDIVIDUAL_PATIENT', payload: data});
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      if (state.patientDetails[id] === undefined) {
+       fetchPatientData();
       }
-      catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPatientData();
-  }, []);
+  }, [dispatch, id, patient, state.patientDetails]);
+
   return (
     <div>
       {patient &&

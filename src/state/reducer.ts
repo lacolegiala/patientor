@@ -31,8 +31,8 @@ export const reducer = (state: State, action: Action): State => {
     case "SET_INDIVIDUAL_PATIENT":
       return {
         ...state,
-        patients: {
-          ...state.patients,
+        patientDetails: {
+          ...state.patientDetails,
           [action.payload.id]: action.payload
         }
       };
