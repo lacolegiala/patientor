@@ -1,35 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { Patient } from '../types';
 import { apiBaseUrl } from '../constants';
+import { useStateValue } from '../state';
 
 const PatientFullInfo: React.FC = () => {
+  const [state, dispatch] = useStateValue();
+  const [patient, setPatient] = useState<Patient | null>(null);
 
   const { id } = useParams<{ id: string }>();
 
   React.useEffect(() => {
-    axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
-
     const fetchPatientData = async () => {
       try {
         const {data} = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
         );
-        console.log(data);
+        console.log('dataaaa', data);
+        setPatient(data);
+        console.log('PATIEEENENTTTT', patient);
+        dispatch({type: 'SET_INDIVIDUAL_PATIENT', payload: data});
       }
       catch (error) {
         console.log(error);
       }
     };
     fetchPatientData();
-  });
+  }, []);
   return (
     <div>
-      <h2>Name</h2>
-      <p>{id}</p>
-      <p>ssn</p>
-      <p>occupation</p>
+      {patient &&
+        <div>
+          <h2>{patient.name}</h2>
+          <p>ssn: {patient.ssn}</p>
+          <p>occupation: {patient.occupation}</p>
+        </div>
+      }
     </div>
   );
 };
