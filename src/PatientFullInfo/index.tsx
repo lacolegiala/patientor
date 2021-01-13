@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
-import { Patient } from '../types';
+import 'semantic-ui-css/semantic.min.css';
+import { Gender, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue } from '../state';
+import { Icon } from 'semantic-ui-react';
 
 const PatientFullInfo: React.FC = () => {
   const [state, dispatch] = useStateValue();
@@ -28,17 +30,41 @@ const PatientFullInfo: React.FC = () => {
       }
   }, [dispatch, id, patient, state.patientDetails]);
 
+  
   return (
     <div>
       {patient &&
         <div>
           <h2>{patient.name}</h2>
+          <GenderIcon gender={patient.gender} />
           <p>ssn: {patient.ssn}</p>
           <p>occupation: {patient.occupation}</p>
         </div>
       }
     </div>
   );
+};
+
+type GenderProps = {
+  gender: Gender;
+};
+
+const GenderIcon: React.FC<GenderProps> = (props: GenderProps) => {
+  if (props.gender === 'male') {
+    return (
+      <Icon name='mars' />
+    );
+  }
+  else if (props.gender === 'female') {
+    return (
+      <Icon name='venus' />
+    );
+  }
+  else {
+    return (
+      <Icon name='neuter' />
+    );
+  }
 };
 
 export default PatientFullInfo;
