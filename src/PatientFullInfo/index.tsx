@@ -17,9 +17,7 @@ const PatientFullInfo: React.FC = () => {
         const {data} = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
         );
-        console.log('dataaaa', data);
         setPatient(data);
-        console.log('PATIEEENENTTTT', patient);
         dispatch({type: 'SET_INDIVIDUAL_PATIENT', payload: data});
       }
       catch (error) {
