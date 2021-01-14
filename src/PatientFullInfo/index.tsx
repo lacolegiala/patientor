@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { Gender, Patient } from '../types';
+import { Diagnosis, Gender, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
-import { setIndividualPatient, useStateValue } from '../state';
+import { setDiagnoses, setIndividualPatient, useStateValue } from '../state';
 import { Icon } from 'semantic-ui-react';
 
 const PatientFullInfo: React.FC = () => {
@@ -15,11 +15,15 @@ const PatientFullInfo: React.FC = () => {
   React.useEffect(() => {
     const fetchPatientData = async () => {
       try {
-        const {data} = await axios.get<Patient>(
+        const {data: patientData} = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
           );
-          setPatient(data);
-          dispatch(setIndividualPatient(data));
+          setPatient(patientData);
+          dispatch(setIndividualPatient(patientData));
+          const {data: diagnosisData} = await axios.get<Diagnosis[]>(
+            `${apiBaseUrl}/diagnoses`
+          );
+          dispatch(setDiagnoses(diagnosisData));
         }
         catch (error) {
           console.log(error);
@@ -48,7 +52,7 @@ const PatientFullInfo: React.FC = () => {
                   {entry.description}
                 </p>
                 {entry.diagnosisCodes ? entry.diagnosisCodes.map(code =>
-                  <li key={code}>{code}</li>
+                  <li key={code}>{code} -{state.diagnoses[code].name}</li>
                 ) : null}
               </div>  
             )}</div>
