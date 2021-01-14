@@ -15,22 +15,24 @@ const PatientFullInfo: React.FC = () => {
   React.useEffect(() => {
     const fetchPatientData = async () => {
       try {
-        const {data: patientData} = await axios.get<Patient>(
-          `${apiBaseUrl}/patients/${id}`
-          );
-          setPatient(patientData);
-          dispatch(setIndividualPatient(patientData));
-          const {data: diagnosisData} = await axios.get<Diagnosis[]>(
+        const [patient, diagnoses] = await Promise.all([
+          axios.get<Patient>(
+            `${apiBaseUrl}/patients/${id}`
+          ),
+          axios.get<Diagnosis[]>(
             `${apiBaseUrl}/diagnoses`
-          );
-          dispatch(setDiagnoses(diagnosisData));
-        }
-        catch (error) {
-          console.log(error);
-        }
-      };
+          )    
+        ]);
+        setPatient(patient.data);
+        dispatch(setIndividualPatient(patient.data));
+        dispatch(setDiagnoses(diagnoses.data));
+      }
+      catch (error) {
+        console.log(error);
+      }
+    };
       if (state.patientDetails[id] === undefined) {
-       fetchPatientData();
+        fetchPatientData();
       }
   }, [dispatch, id, patient, state.patientDetails]);
 
@@ -52,7 +54,7 @@ const PatientFullInfo: React.FC = () => {
                   {entry.description}
                 </p>
                 {entry.diagnosisCodes ? entry.diagnosisCodes.map(code =>
-                  <li key={code}>{code} -{state.diagnoses[code].name}</li>
+                  <li key={code}>{code} - {state.diagnoses[code]?.name}</li>
                 ) : null}
               </div>  
             )}</div>
