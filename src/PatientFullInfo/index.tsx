@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Gender, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
-import { useStateValue } from '../state';
+import { setIndividualPatient, useStateValue } from '../state';
 import { Icon } from 'semantic-ui-react';
 
 const PatientFullInfo: React.FC = () => {
@@ -19,7 +19,7 @@ const PatientFullInfo: React.FC = () => {
           `${apiBaseUrl}/patients/${id}`
           );
           setPatient(data);
-          dispatch({type: 'SET_INDIVIDUAL_PATIENT', payload: data});
+          dispatch(setIndividualPatient(data));
         }
         catch (error) {
           console.log(error);
