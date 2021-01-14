@@ -39,6 +39,23 @@ const PatientFullInfo: React.FC = () => {
           <GenderIcon gender={patient.gender} />
           <p>ssn: {patient.ssn}</p>
           <p>occupation: {patient.occupation}</p>
+          <h3>entries</h3>
+          {patient.entries.length > 0 ?
+            <div>{patient.entries.map(entry =>
+              <div key={entry.id}>
+                {entry.date}
+                <p>
+                  {entry.description}
+                </p>
+                {entry.diagnosisCodes ? entry.diagnosisCodes.map(code =>
+                  <li key={code}>{code}</li>
+                ) : null}
+              </div>  
+            )}</div>
+          : <div>
+            No entries
+          </div>
+          }
         </div>
       }
     </div>
