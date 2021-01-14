@@ -63,3 +63,10 @@ export const setIndividualPatient = (patient: Patient): Action => {
     payload: patient
   };
 };
+
+export const addPatient = (newpatient: Patient): Action => {
+  return {
+    type: 'ADD_PATIENT',
+    payload: newpatient
+  };
+};
