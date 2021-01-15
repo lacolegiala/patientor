@@ -50,7 +50,14 @@ const PatientFullInfo: React.FC = () => {
           {patient.entries.length > 0 ?
             <div>{patient.entries.map(entry =>
               <div key={entry.id}>
-                <EntryDetails entry={entry} state={state} />
+                <EntryDetails entry={entry} />
+                <h3>{entry.date}</h3>
+                <p>
+                  {entry.description}
+                </p>
+                {entry.diagnosisCodes ? entry.diagnosisCodes.map(code =>
+                  <li key={code}>{code} - {state.diagnoses[code]?.name}</li>
+                ) : null}
               </div>  
             )}</div>
           : <div>
