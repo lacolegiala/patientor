@@ -32,6 +32,13 @@ const HealthCheckEntryDetails: React.FC<{entry: HealthCheckEntry}> = ({entry}) =
   );
 };
 
+const assertNever = (value: never): never => {
+  throw new Error(
+    `Unhandled discriminated union member: ${JSON.stringify(value)}`
+  );
+};
+
+
 const EntryDetails: React.FC<{entry: Entry}> = ({entry}) => {
   switch(entry.type) {
     case "Hospital":
@@ -46,6 +53,8 @@ const EntryDetails: React.FC<{entry: Entry}> = ({entry}) => {
       return (
         <HealthCheckEntryDetails entry={entry} />
       );
+    default:
+      return assertNever(entry);
   }
 };
 
