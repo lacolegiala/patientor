@@ -4,25 +4,19 @@ import { Entry } from '../types';
 
 const HospitalEntry: React.FC<{entry: Entry}> = () => {
   return (
-    <div>
-      <Icon name='hospital'/>
-    </div>
+    <Icon name='hospital'/>
   );
 };
 
 const OccupationalHealthcareEntry: React.FC<{entry: Entry}> = () => {
   return (
-    <div>
-      <Icon name='doctor' />
-    </div>
+    <Icon name='doctor' />
   );
 };
 
 const HealthCheckEntry: React.FC<{entry: Entry}> = () => {
   return (
-    <div>
-      <Icon name='heart' />
-    </div>
+    <Icon name='heart' />
   );
 };
 
