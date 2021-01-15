@@ -1,22 +1,34 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
-import { Entry } from '../types';
+import { Entry, HealthCheckEntry, HospitalEntry, OccupationalHealthcareEntry } from '../types';
 
-const HospitalEntry: React.FC<{entry: Entry}> = () => {
+const HospitalEntryDetails: React.FC<{entry: HospitalEntry}> = ({entry}) => {
   return (
-    <Icon name='hospital'/>
+    <>
+      <Icon name='hospital'/>
+      <p>Discharge: {entry.discharge}</p>
+    </>
   );
 };
 
-const OccupationalHealthcareEntry: React.FC<{entry: Entry}> = () => {
+const OccupationalHealthcareEntryDetails: React.FC<{entry: OccupationalHealthcareEntry}> = ({entry}) => {
   return (
-    <Icon name='doctor' />
+    <>
+      <Icon name='doctor' />
+      {entry.sickLeave ? 
+        <p>Sickleave: {entry.sickLeave}</p>
+        : <p>No sickleave</p>
+     }
+    </>
   );
 };
 
-const HealthCheckEntry: React.FC<{entry: Entry}> = () => {
+const HealthCheckEntryDetails: React.FC<{entry: HealthCheckEntry}> = ({entry}) => {
   return (
-    <Icon name='heart' />
+    <>
+      <Icon name='heart' />
+      <p>Rating: {entry.healthCheckRating}</p>
+    </>
   );
 };
 
@@ -24,21 +36,15 @@ const EntryDetails: React.FC<{entry: Entry}> = ({entry}) => {
   switch(entry.type) {
     case "Hospital":
       return (
-        <div>
-          <HospitalEntry entry={entry} />
-        </div>
+        <HospitalEntryDetails entry={entry} />
       );
     case "OccupationalHealthcare":
       return (
-        <div>
-          <OccupationalHealthcareEntry entry ={entry} />
-        </div>
+        <OccupationalHealthcareEntryDetails entry ={entry} />
       );
     case "HealthCheck":
       return (
-        <div>
-          <HealthCheckEntry entry={entry} />
-        </div>
+        <HealthCheckEntryDetails entry={entry} />
       );
   }
 };
