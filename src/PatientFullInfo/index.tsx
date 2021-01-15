@@ -6,6 +6,7 @@ import { Diagnosis, Gender, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import { setDiagnoses, setIndividualPatient, useStateValue } from '../state';
 import { Icon } from 'semantic-ui-react';
+import EntryDetails from './Entry';
 
 const PatientFullInfo: React.FC = () => {
   const [state, dispatch] = useStateValue();
