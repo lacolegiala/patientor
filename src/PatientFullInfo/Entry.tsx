@@ -6,7 +6,7 @@ const HospitalEntryDetails: React.FC<{entry: HospitalEntry}> = ({entry}) => {
   return (
     <>
       <Icon name='hospital'/>
-      <p>Discharge: {entry.discharge}</p>
+      <p>Discharge: {entry.discharge.date} {entry.discharge.criteria}</p>
     </>
   );
 };
@@ -16,9 +16,9 @@ const OccupationalHealthcareEntryDetails: React.FC<{entry: OccupationalHealthcar
     <>
       <Icon name='doctor' />
       {entry.sickLeave ? 
-        <p>Sickleave: {entry.sickLeave}</p>
+        <p>Sickleave: {entry.sickLeave.startDate} - {entry.sickLeave.endDate}</p>
         : <p>No sickleave</p>
-     }
+      }
     </>
   );
 };
