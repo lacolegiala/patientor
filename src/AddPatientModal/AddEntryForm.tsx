@@ -10,6 +10,10 @@ interface EntryProps {
   onCancel: () => void;
 }
 
+const isDate = (date: string): boolean => {
+  return Boolean(Date.parse(date));
+};
+
 const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
 
@@ -24,12 +28,16 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
       onSubmit={onSubmit}
       validate={values => {
         const requiredError = "Field is required";
+        const wrongFormatError = "Formatted wrong";
           const errors: { [field: string]: string } = {};
           if (!values.description) {
             errors.description = requiredError;
           }
           if (!values.date) {
             errors.date = requiredError;
+          }
+          else if (!isDate(values.date)) {
+            errors.date = wrongFormatError;
           }
           if (!values.specialist) {
             errors.specialist = requiredError;
