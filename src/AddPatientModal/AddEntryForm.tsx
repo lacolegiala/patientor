@@ -15,63 +15,63 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
 
   return (
     <Formik
-    initialValues={{
-      description: "",
-      date: "",
-      specialist: "",
-      employerName: ""
-    }}
-    onSubmit={onSubmit}
-    validate={values => {
-      const requiredError = "Field is required";
-        const errors: { [field: string]: string } = {};
-        if (!values.description) {
-          errors.description = requiredError;
-        }
-        if (!values.date) {
-          errors.date = requiredError;
-        }
-        if (!values.specialist) {
-          errors.specialist = requiredError;
-        }
-        if (!values.employerName) {
-          errors.employerName = requiredError;
-        }
-        return errors;
-    }}
-  >
+      initialValues={{
+        description: "",
+        date: "",
+        specialist: "",
+        employerName: ""
+      }}
+      onSubmit={onSubmit}
+      validate={values => {
+        const requiredError = "Field is required";
+          const errors: { [field: string]: string } = {};
+          if (!values.description) {
+            errors.description = requiredError;
+          }
+          if (!values.date) {
+            errors.date = requiredError;
+          }
+          if (!values.specialist) {
+            errors.specialist = requiredError;
+          }
+          if (!values.employerName) {
+            errors.employerName = requiredError;
+          }
+          return errors;
+      }}
+    >
     {({ isValid, dirty, setFieldValue, setFieldTouched, handleSubmit, handleChange }) => {
 
       return (
         <Form className="form ui" onSubmit={handleSubmit}>
           <Field
-              label="Description"
-              placeholder="Description"
-              name="description"
-              component={TextField}
-              onChange={handleChange}
-            />
-            <Field
-              label="Date"
-              placeholder="YYYY-MM-DD"
-              name="date"
-              component={TextField}
-              onChange={handleChange}
-            />
-            <Field
-              label="Specialist"
-              placeholder="Specialist"
-              name="dateOfBirth"
-              component={TextField}
-              onChange={handleChange}
-            />
-            <Field
-              label="Employer name"
-              placeholder="Employer name"
-              name="employerName"
-              component={TextField}
-              onChange={handleChange}
-            />
+            label="Description"
+            placeholder="Description"
+            name="description"
+            component={TextField}
+            onChange={handleChange}
+          />
+          <Field
+            label="Date"
+            placeholder="YYYY-MM-DD"
+            name="date"
+            component={TextField}
+            onChange={handleChange}
+          />
+          <Field
+            label="Specialist"
+            placeholder="Specialist"
+            name="specialist"
+            component={TextField}
+            onChange={handleChange}
+          />
+          <Field
+            label="Employer name"
+            placeholder="Employer name"
+            name="employerName"
+            component={TextField}
+            onChange={handleChange}
+          />
 
           <DiagnosisSelection
             setFieldValue={setFieldValue}
