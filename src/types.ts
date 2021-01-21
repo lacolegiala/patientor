@@ -54,7 +54,7 @@ export interface HospitalEntry extends BaseEntry {
 export type Entry = HealthCheckEntry | OccupationalHealthcareEntry | HospitalEntry;
 
 export type EntryFormValues = {
-  type: string;
+  type: "HealthCheck" | "OccupationalHealthcare" | "Hospital";
   description: string;
   date: string;
   specialist: string;
