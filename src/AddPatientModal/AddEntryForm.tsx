@@ -53,12 +53,21 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
 
       return (
         <Form className="form ui" onSubmit={handleSubmit}>
-          <input type="radio" id="occupationalHealthcare" name="type" value="occupationalHealthcare"/>
-          <label htmlFor="occupationalHealthCare">Occupational healthcare</label>
-          <input type="radio" id="healthCheck" name="type" value="healthCheck"/>
-          <label htmlFor="healthCheck">Healthcheck</label>
-          <input type="radio" id="hospital" name="type" value="hospital"/>
-          <label htmlFor="hospital">Hospital</label>
+          <div id="type-pick">Pick an entry type</div>
+          <div role="group" aria-labelledby="type-pick">
+            <label>
+              <Field type="radio" name="type" value="OccupationalHealthcare" />
+              Occupational healthcare
+            </label>
+            <label>
+              <Field type="radio" name="type" value="HealthCheck" />
+              Health check
+            </label>
+            <label>
+              <Field type="radio" name="type" value="Hospital" />
+              Hospital
+            </label>
+          </div>
           <Field
             label="Description"
             placeholder="Description"
