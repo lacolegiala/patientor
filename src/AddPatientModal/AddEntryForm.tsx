@@ -1,6 +1,6 @@
 import { Field, Formik } from "formik";
 import React from "react";
-import { Form } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 import { useStateValue } from "../state";
 import { EntryFormValues } from "../types";
 import { DiagnosisSelection, TextField } from "./FormField";
@@ -79,11 +79,11 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
             diagnoses={Object.values(diagnoses)}
           />    
 
-          <button
+          <Button
             type="submit"
             color="green"
             disabled={!dirty || !isValid}
-          >Submit</button>
+          >Submit</Button>
         </Form>
       );
     }}
