@@ -18,8 +18,7 @@ const PatientFullInfo: React.FC = () => {
   const submitNewEntry = async (values: EntryFormValues) => {
     try {
       const newEntryWithType = {
-        ...values,
-        type: "OccupationalHealthcare"
+        ...values
       };
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,

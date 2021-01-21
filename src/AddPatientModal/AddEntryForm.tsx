@@ -20,6 +20,7 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
   return (
     <Formik
       initialValues={{
+        type: "OccupationalHealthcare",  
         description: "",
         date: "",
         specialist: "",
@@ -52,6 +53,12 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
 
       return (
         <Form className="form ui" onSubmit={handleSubmit}>
+          <input type="radio" id="occupationalHealthcare" name="type" value="occupationalHealthcare"/>
+          <label htmlFor="occupationalHealthCare">Occupational healthcare</label>
+          <input type="radio" id="healthCheck" name="type" value="healthCheck"/>
+          <label htmlFor="healthCheck">Healthcheck</label>
+          <input type="radio" id="hospital" name="type" value="hospital"/>
+          <label htmlFor="hospital">Hospital</label>
           <Field
             label="Description"
             placeholder="Description"
