@@ -14,18 +14,29 @@ const isDate = (date: string): boolean => {
   return Boolean(Date.parse(date));
 };
 
+const initialValues: EntryFormValues = {
+  type: "OccupationalHealthcare",  
+  description: "",
+  date: "",
+  specialist: "",
+  employerName: "",
+  healthCheckRating: 0,
+  sickLeave: {
+    startDate: "",
+    endDate: ""
+  },
+  discharge: {
+    date: "",
+    criteria: ""
+  }
+};
+
 const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
 
   return (
     <Formik
-      initialValues={{
-        type: "OccupationalHealthcare",  
-        description: "",
-        date: "",
-        specialist: "",
-        employerName: ""
-      }}
+      initialValues={initialValues}
       onSubmit={onSubmit}
       validate={values => {
         const requiredError = "Field is required";
@@ -43,13 +54,13 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
           if (!values.specialist) {
             errors.specialist = requiredError;
           }
-          if (!values.employerName) {
+          if (values.type === "OccupationalHealthcare" && !values.employerName) {
             errors.employerName = requiredError;
           }
           return errors;
       }}
     >
-    {({ isValid, dirty, setFieldValue, setFieldTouched, handleSubmit, handleChange }) => {
+    {({ isValid, dirty, values, setFieldValue, setFieldTouched, handleSubmit, handleChange }) => {
 
       return (
         <Form className="form ui" onSubmit={handleSubmit}>
@@ -89,13 +100,24 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
             component={TextField}
             onChange={handleChange}
           />
-          <Field
-            label="Employer name"
-            placeholder="Employer name"
-            name="employerName"
-            component={TextField}
-            onChange={handleChange}
-          />
+          {values.type === "OccupationalHealthcare" &&
+            <Field
+              label="Employer name"
+              placeholder="Employer name"
+              name="employerName"
+              component={TextField}
+              onChange={handleChange}
+            />
+          }
+          {values.type === "Hospital" &&
+            <Field
+              label="Date of discharge"
+              placeholder="YYYY-MM-DD"
+              name="dateOfDischarge"
+              component={TextField}
+              onChange={handleChange}
+            />
+          }
 
           <DiagnosisSelection
             setFieldValue={setFieldValue}
