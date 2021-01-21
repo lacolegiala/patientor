@@ -2,16 +2,31 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { Diagnosis, Gender, Patient } from '../types';
+import { Diagnosis, Entry, EntryFormValues, Gender, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import { setDiagnoses, setIndividualPatient, useStateValue } from '../state';
 import { Icon } from 'semantic-ui-react';
 import EntryDetails from './Entry';
+import AddEntryForm from '../AddPatientModal/AddEntryForm';
 
 const PatientFullInfo: React.FC = () => {
   const [state, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(state.patientDetails[id]);
+
+
+  const submitNewEntry = async (values: EntryFormValues) => {
+    try {
+      const { data: newEntry } = await axios.post<Entry>(
+        `${apiBaseUrl}/patients/${id}/entries`,
+        values
+      );
+      // dispatch(addPatient(newEntry));
+      console.log(newEntry);
+    } catch (e) {
+      console.error(e.response.data);
+    }
+  };
 
   React.useEffect(() => {
     const fetchPatientData = async () => {
@@ -65,6 +80,7 @@ const PatientFullInfo: React.FC = () => {
             No entries
           </div>
           }
+          <AddEntryForm onCancel={() => null} onSubmit={() => submitNewEntry} />
         </div>
       }
     </div>
