@@ -17,12 +17,15 @@ const PatientFullInfo: React.FC = () => {
 
   const submitNewEntry = async (values: EntryFormValues) => {
     try {
+      const newEntryWithType = {
+        ...values,
+        type: "OccupationalHealthcare"
+      };
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,
-        values
+        newEntryWithType
       );
       // dispatch(addPatient(newEntry));
-      console.log(newEntry);
     } catch (e) {
       console.error(e.response.data);
     }
@@ -80,7 +83,8 @@ const PatientFullInfo: React.FC = () => {
             No entries
           </div>
           }
-          <AddEntryForm onCancel={() => null} onSubmit={() => submitNewEntry} />
+          <h2>Add a new entry</h2>
+          <AddEntryForm onCancel={() => null} onSubmit={submitNewEntry} />
         </div>
       }
     </div>
