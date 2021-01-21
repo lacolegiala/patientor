@@ -79,7 +79,11 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
             diagnoses={Object.values(diagnoses)}
           />    
 
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            color="green"
+            disabled={!dirty || !isValid}
+          >Submit</button>
         </Form>
       );
     }}
