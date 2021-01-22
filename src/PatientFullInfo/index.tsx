@@ -123,7 +123,7 @@ const PatientFullInfo: React.FC = () => {
           </div>
           }
           <h2>Add a new entry</h2>
-          <AddEntryForm onCancel={() => null} onSubmit={submitNewEntry} />
+          <AddEntryForm onSubmit={submitNewEntry} />
         </div>
       }
     </div>

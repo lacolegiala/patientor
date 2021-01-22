@@ -7,7 +7,6 @@ import { DiagnosisSelection, NumberField, TextField } from "./FormField";
 
 interface EntryProps {
   onSubmit: (values: EntryFormValues) => void;
-  onCancel: () => void;
 }
 
 const isDate = (date: string): boolean => {
@@ -27,7 +26,7 @@ const initialValues: EntryFormValues = {
   dischargeCriteria: ""
 };
 
-const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
+const AddEntryForm: React.FC<EntryProps> = ({ onSubmit }) => {
   const [{ diagnoses }] = useStateValue();
 
   return (
