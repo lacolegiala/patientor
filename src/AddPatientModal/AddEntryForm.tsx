@@ -25,10 +25,8 @@ const initialValues: EntryFormValues = {
     startDate: "",
     endDate: ""
   },
-  discharge: {
-    date: "",
-    criteria: ""
-  }
+  dischargeDate: "",
+  dischargeCriteria: ""
 };
 
 const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
@@ -56,6 +54,15 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
           }
           if (values.type === "OccupationalHealthcare" && !values.employerName) {
             errors.employerName = requiredError;
+          }
+          if (values.type === "Hospital" && !values.dischargeDate) {
+            errors.dischargeDate = requiredError;
+          }
+          else if (!isDate(values.dischargeDate)) {
+            errors.dischargeDate = wrongFormatError;
+          }
+          if (values.type === "Hospital" && !values.dischargeCriteria) {
+            errors.dischargeCriteria = requiredError;
           }
           return errors;
       }}
@@ -110,13 +117,22 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
             />
           }
           {values.type === "Hospital" &&
-            <Field
-              label="Date of discharge"
-              placeholder="YYYY-MM-DD"
-              name="dateOfDischarge"
-              component={TextField}
-              onChange={handleChange}
-            />
+            <div>
+              <Field
+                label="Discharge date"
+                placeholder="YYYY-MM-DD"
+                name="dischargeDate"
+                component={TextField}
+                onChange={handleChange}
+              />
+              <Field
+                label="Discharge criteria"
+                placeholder="Discharge criteria"
+                name="dischargeCriteria"
+                component={TextField}
+                onChange={handleChange}
+              />
+            </div>
           }
 
           <DiagnosisSelection

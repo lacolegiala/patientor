@@ -60,9 +60,10 @@ export type EntryFormValues = {
   specialist: string;
   diagnosisCodes?: Array<Diagnosis['code']>;
   healthCheckRating?: HealthCheckRating;
-  employerName?: string;
+  employerName: string;
   sickLeave?: SickLeave;
-  discharge?: Discharge;
+  dischargeDate: string;
+  dischargeCriteria: string;
 };
 
 export interface Patient {

@@ -9,6 +9,35 @@ import { Icon } from 'semantic-ui-react';
 import EntryDetails from './Entry';
 import AddEntryForm from '../AddPatientModal/AddEntryForm';
 
+const createApiEntry = (values: EntryFormValues) => {
+  const baseValues = {
+    type: values.type,
+    description: values.description,
+    date: values.date,
+    specialist: values.specialist
+  };
+  
+  const occupationalHealthcareValues = {
+    ...baseValues,
+    employerName: values.employerName
+  };
+  
+  const hospitalValues = {
+    ...baseValues,
+    discharge : {
+      date: values.dischargeDate,
+      criteria: values.dischargeCriteria
+    }
+  };
+
+  if (values.type === "OccupationalHealthcare") {
+    return occupationalHealthcareValues;
+  }
+  else if (values.type === "Hospital") {
+    return hospitalValues;
+  }
+};
+
 const PatientFullInfo: React.FC = () => {
   const [state, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
@@ -16,13 +45,12 @@ const PatientFullInfo: React.FC = () => {
 
 
   const submitNewEntry = async (values: EntryFormValues) => {
+    console.log('aaaaaa', values);
+    const entry = createApiEntry(values);
     try {
-      const newEntryWithType = {
-        ...values
-      };
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,
-        newEntryWithType
+        entry
       );
       // dispatch(addPatient(newEntry));
     } catch (e) {
