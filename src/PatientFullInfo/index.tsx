@@ -57,14 +57,12 @@ const PatientFullInfo: React.FC = () => {
 
 
   const submitNewEntry = async (values: EntryFormValues) => {
-    console.log('aaaaaa', values);
     const entry = createApiEntry(values);
     try {
-      const { data: newEntry } = await axios.post<Entry>(
+      await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,
         entry
       );
-      // dispatch(addPatient(newEntry));
     } catch (e) {
       console.error(e.response.data);
     }
