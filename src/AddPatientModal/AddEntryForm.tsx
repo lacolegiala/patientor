@@ -55,14 +55,16 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
           if (values.type === "OccupationalHealthcare" && !values.employerName) {
             errors.employerName = requiredError;
           }
-          if (values.type === "Hospital" && !values.dischargeDate) {
-            errors.dischargeDate = requiredError;
-          }
-          else if (!isDate(values.dischargeDate)) {
-            errors.dischargeDate = wrongFormatError;
-          }
-          if (values.type === "Hospital" && !values.dischargeCriteria) {
-            errors.dischargeCriteria = requiredError;
+          if (values.type === "Hospital") {
+            if (!values.dischargeDate) {
+              errors.dischargeDate = requiredError;
+            }
+            else if (!isDate(values.dischargeDate)) {
+              errors.dischargeDate = wrongFormatError;
+            }
+            if (!values.dischargeCriteria) {
+              errors.dischargeCriteria = requiredError;
+            }
           }
           return errors;
       }}
