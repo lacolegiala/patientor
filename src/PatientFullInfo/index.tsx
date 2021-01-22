@@ -19,7 +19,11 @@ const createApiEntry = (values: EntryFormValues) => {
   
   const occupationalHealthcareValues = {
     ...baseValues,
-    employerName: values.employerName
+    employerName: values.employerName,
+    sickleave: {
+      startDate: values.sickLeaveStart,
+      endDate: values.sickLeaveEnd
+    }
   };
   
   const hospitalValues = {
@@ -30,11 +34,19 @@ const createApiEntry = (values: EntryFormValues) => {
     }
   };
 
+  const healthCheckValues = {
+    ...baseValues,
+    healthCheckRating: values.healthCheckRating
+  };
+
   if (values.type === "OccupationalHealthcare") {
     return occupationalHealthcareValues;
   }
   else if (values.type === "Hospital") {
     return hospitalValues;
+  }
+  else if (values.type === "HealthCheck") {
+    return healthCheckValues;
   }
 };
 

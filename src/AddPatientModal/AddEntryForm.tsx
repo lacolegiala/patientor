@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Form } from "semantic-ui-react";
 import { useStateValue } from "../state";
 import { EntryFormValues } from "../types";
-import { DiagnosisSelection, TextField } from "./FormField";
+import { DiagnosisSelection, NumberField, TextField } from "./FormField";
 
 interface EntryProps {
   onSubmit: (values: EntryFormValues) => void;
@@ -21,10 +21,8 @@ const initialValues: EntryFormValues = {
   specialist: "",
   employerName: "",
   healthCheckRating: 0,
-  sickLeave: {
-    startDate: "",
-    endDate: ""
-  },
+  sickLeaveStart: "",
+  sickLeaveEnd: "",
   dischargeDate: "",
   dischargeCriteria: ""
 };
@@ -110,13 +108,29 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
             onChange={handleChange}
           />
           {values.type === "OccupationalHealthcare" &&
-            <Field
-              label="Employer name"
-              placeholder="Employer name"
-              name="employerName"
-              component={TextField}
-              onChange={handleChange}
-            />
+            <div>
+              <Field
+                label="Employer name"
+                placeholder="Employer name"
+                name="employerName"
+                component={TextField}
+                onChange={handleChange}
+              />
+              <Field
+                label="Sick leave start date"
+                placeholder="YYYY-MM-DD"
+                name="sickLeaveStart"
+                component={TextField}
+                onChange={handleChange}
+              />
+              <Field
+                label="Sick leave end date"
+                placeholder="YYYY-MM-DD"
+                name="sickLeaveEnd"
+                component={TextField}
+                onChange={handleChange}
+              />
+            </div>
           }
           {values.type === "Hospital" &&
             <div>
@@ -135,6 +149,15 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
                 onChange={handleChange}
               />
             </div>
+          }
+          {values.type === "HealthCheck" &&
+            <Field
+              label="healthCheckRating"
+              name="healthCheckRating"
+              component={NumberField}
+              min={0}
+              max={3}
+            />
           }
 
           <DiagnosisSelection
