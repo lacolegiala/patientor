@@ -64,6 +64,11 @@ const AddEntryForm: React.FC<EntryProps> = ({ onSubmit, onCancel }) => {
               errors.dischargeCriteria = requiredError;
             }
           }
+          if (values.type === "HealthCheck") {
+            if (!values.healthCheckRating && values.healthCheckRating !== 0) {
+              errors.healthCheckRating = requiredError;
+            }
+          }
           return errors;
       }}
     >
