@@ -17,7 +17,7 @@ const OccupationalHealthcareEntryDetails: React.FC<{entry: OccupationalHealthcar
       <Icon name='doctor' />
       {entry.sickLeave ? 
         <p>Sickleave: {entry.sickLeave.startDate} - {entry.sickLeave.endDate}</p>
-        : <p>No sickleave</p>
+        : <p>No sick leave</p>
       }
     </>
   );

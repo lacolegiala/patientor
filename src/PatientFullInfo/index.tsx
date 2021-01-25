@@ -14,13 +14,14 @@ const createApiEntry = (values: EntryFormValues) => {
     type: values.type,
     description: values.description,
     date: values.date,
-    specialist: values.specialist
+    specialist: values.specialist,
+    diagnosisCodes: values.diagnosisCodes
   };
   
   const occupationalHealthcareValues = {
     ...baseValues,
     employerName: values.employerName,
-    sickleave: {
+    sickLeave: {
       startDate: values.sickLeaveStart,
       endDate: values.sickLeaveEnd
     }
@@ -54,7 +55,25 @@ const PatientFullInfo: React.FC = () => {
   const [state, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(state.patientDetails[id]);
-
+  
+  const fetchPatientData = async () => {
+    try {
+      const [patient, diagnoses] = await Promise.all([
+        axios.get<Patient>(
+          `${apiBaseUrl}/patients/${id}`
+          ),
+        axios.get<Diagnosis[]>(
+          `${apiBaseUrl}/diagnoses`
+          )    
+        ]);
+        setPatient(patient.data);
+        dispatch(setIndividualPatient(patient.data));
+        dispatch(setDiagnoses(diagnoses.data));
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
 
   const submitNewEntry = async (values: EntryFormValues) => {
     const entry = createApiEntry(values);
@@ -63,33 +82,16 @@ const PatientFullInfo: React.FC = () => {
         `${apiBaseUrl}/patients/${id}/entries`,
         entry
       );
+      fetchPatientData();
     } catch (e) {
       console.error(e.response.data);
     }
   };
 
   React.useEffect(() => {
-    const fetchPatientData = async () => {
-      try {
-        const [patient, diagnoses] = await Promise.all([
-          axios.get<Patient>(
-            `${apiBaseUrl}/patients/${id}`
-          ),
-          axios.get<Diagnosis[]>(
-            `${apiBaseUrl}/diagnoses`
-          )    
-        ]);
-        setPatient(patient.data);
-        dispatch(setIndividualPatient(patient.data));
-        dispatch(setDiagnoses(diagnoses.data));
-      }
-      catch (error) {
-        console.log(error);
-      }
-    };
-      if (state.patientDetails[id] === undefined) {
-        fetchPatientData();
-      }
+    if (state.patientDetails[id] === undefined) {
+      fetchPatientData();
+    }
   }, [dispatch, id, patient, state.patientDetails]);
 
   
